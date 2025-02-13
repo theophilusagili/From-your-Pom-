@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odia, Be My Val? ❤️</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #ffebf0;
+            color: #d63384;
+            margin: 50px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: inline-block;
+            margin-top: 10%;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .heart {
+            font-size: 50px;
+            animation: heartbeat 1s infinite alternate;
+        }
+        @keyframes heartbeat {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .yes {
+            background-color: #d63384;
+            color: white;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+        .no {
+            background-color: #ccc;
+            color: black;
+            font-size: 18px;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="container">
+    <h1>Odia ❤️</h1>
+    <p>My smallie, my peanut, my favorite person in the world.</p>
+    <p>Upon all our ups and downs, somehow I can’t seem to get you off my mind.</p>
+    <p>I do love you. 💖</p>
+    <p>And I want to make sure to share this Valentine with you as a starter to the second chapter of our relationship.</p>
+    <p>So, will you be my Val, Odia? ❤️</p>
+    <div class="heart">💖</div>
+    <div class="buttons">
+        <button class="yes" id="yesBtn" onclick="yesClicked()">Yes 😘</button>
+        <button class="no" id="noBtn" onmouseover="moveButton()" onclick="wrongAnswer()">No 😜</button>
+    </div>
+</div>
+
+<script>
+    let yesBtn = document.getElementById("yesBtn");
+    let noBtn = document.getElementById("noBtn");
+
+    function yesClicked() {
+        startConfetti();
+        alert("Yay! You just made my day, my smallie! ❤️🥰 Can't wait to celebrate with you! 🎉💖");
+    }
+
+    function moveButton() {
+        let x = Math.random() * (window.innerWidth - 100);
+        let y = Math.random() * (window.innerHeight - 50);
+        noBtn.style.left = `${x}px`;
+        noBtn.style.top = `${y}px`;
+    }
+
+    function wrongAnswer() {
+        alert("Wrong answer 😜");
+        let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+        yesBtn.style.fontSize = `${currentSize + 5}px`;
+    }
+
+    // Confetti Effect
+    let confettiCanvas = document.getElementById("confetti");
+    let confettiCtx = confettiCanvas.getContext("2d");
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+    let confettiParticles = [];
+
+    function startConfetti() {
+        for (let i = 0; i < 100; i++) {
+            confettiParticles.push({
+                x: Math.random() * confettiCanvas.width,
+                y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+                color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                size: Math.random() * 6 + 2,
+                speed: Math.random() * 3 + 2
+            });
+        }
+        requestAnimationFrame(drawConfetti);
+    }
+
+    function drawConfetti() {
+        confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        confettiParticles.forEach((p, i) => {
+            confettiCtx.fillStyle = p.color;
+            confettiCtx.beginPath();
+            confettiCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            confettiCtx.fill();
+            p.y += p.speed;
+            if (p.y > confettiCanvas.height) {
+                p.y = 0;
+            }
+        });
+        requestAnimationFrame(drawConfetti);
+    }
+</script>
+
+</body>
+</html>
